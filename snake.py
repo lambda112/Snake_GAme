@@ -15,6 +15,14 @@ class Snake:
             new_segment.goto(position)
             self.segments.append(new_segment)
 
+    def get_postion(self):
+        # Get position of all segements
+        segment_positions = []
+        for seg in self.segments:
+            segment_positions.append(seg.pos())
+        
+        return segment_positions
+
     def move(self):
         # Animate Snake
         for seg_num in range(len(self.segments) - 1, 0, -1):
