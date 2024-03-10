@@ -12,17 +12,27 @@ screen.title("Snake")
 
 # Instinate Objects
 snake = Snake()
-food = Food(screen_width=screen.window_width(), screen_height=screen.window_height(), snake_pos=snake.get_postion())
+food = Food(screen_width=screen.window_width(), screen_height=screen.window_height())
 
 # Game Loop
 game_is_on = True
 food.create_food()
+screen = t.Screen()
+screen.listen()
+screen.onkeypress(fun = snake.upward, key = "w")
+screen.onkeypress(fun = snake.downward, key = "s")
+screen.onkeypress(fun = snake.left, key = "a")
+screen.onkeypress(fun = snake.right, key = "d")
+        
 
 while game_is_on:
-    screen.update()
-    sleep(0.1)
     snake.move()
-    food.check_collision()
+    screen.update()
+    sleep(0.085)
+
+    if food.check_collision(snake_pos= snake.get_postion()):
+        snake.segments.append(snake.create_segment(snake.new_pos))
+        snake.new_cord_value - 20
 
 # Close on Click
 screen.exitonclick()
