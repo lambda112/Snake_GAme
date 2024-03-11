@@ -16,6 +16,8 @@ class Snake:
         for position in self.starting_positions:
             new_segment = self.create_segment(position)
             self.segments.append(new_segment)
+        
+        self.head = self.segments[0]
 
     def create_segment(self, position):
         new_segment = t.Turtle("square")
@@ -35,7 +37,6 @@ class Snake:
     def check_collision(self):
         for pos in self.get_position()[1:]:
             if self.segments[0].distance(pos) < 0.5:
-                print("Game Over")
                 return True
             
         return False
