@@ -1,7 +1,7 @@
 import turtle as t
 from time import sleep
 
-MOVE_DISTANCE = 20
+MOVE_DISTANCE = 10
 
 class Snake:
     def __init__(self) -> None:
@@ -24,13 +24,21 @@ class Snake:
         new_segment.goto(position)
         return new_segment
         
-    def get_postion(self):
+    def get_position(self):
         # Get position of all segements
         segment_positions = []
         for seg in self.segments:
             segment_positions.append(seg.pos())
         
         return segment_positions
+    
+    def check_collision(self):
+        for pos in self.get_position()[1:]:
+            if self.segments[0].distance(pos) < 0.5:
+                print("Game Over")
+                return True
+            
+        return False
 
     def move(self):
         # Animate Snake
