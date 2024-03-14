@@ -24,10 +24,7 @@ screen.onkeypress(fun = snake.left, key = "a")
 screen.onkeypress(fun = snake.right, key = "d")
 
 # Game Loop
-
-
 game_is_on = True
-score = 0
 
 while game_is_on:
     snake.move()
@@ -36,20 +33,20 @@ while game_is_on:
 
     # Collision with Tail
     if snake.check_collision():
-        score_board.write_game_over(score)
-        game_is_on = False
+        score_board.reset()
+        snake.reset()
 
     if snake.head.xcor() > 278 or snake.head.xcor() < -278 or snake.head.ycor() > 278 or snake.head.ycor() < -278:
-        score_board.write_game_over(score)
-        game_is_on = False
+        score_board.reset()
+        snake.reset()
 
     # Colision with Food
     for pos in snake.get_position():
         if food.distance(pos) < 20:
             food.refresh()
-            score += 1
-            score_board.write_score(score)
-            
+            score_board.increase_score()
+            score_board.update_score()
+
             snake.segments.append(snake.create_segment(snake.new_pos))
             snake.new_cord_value - 20
 

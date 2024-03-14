@@ -9,6 +9,7 @@ class Snake:
         self.new_cord_value = -40
         self.new_pos = (-60, 0)
         self.segments = [] 
+        self.extra_speed = 0
         self.reset_snake()
 
     def reset_snake(self):
@@ -18,12 +19,14 @@ class Snake:
             self.segments.append(new_segment)
         
         self.head = self.segments[0]
+        self.extra_speed = 0
 
     def create_segment(self, position):
         new_segment = t.Turtle("square")
         new_segment.color("white")
         new_segment.penup()
         new_segment.goto(position)
+        self.extra_speed += 0.4
         return new_segment
         
     def get_position(self):
@@ -40,6 +43,14 @@ class Snake:
                 return True
             
         return False
+    
+    def reset(self):
+        for seg in self.segments:
+            seg.reset()
+        self.segments.clear()
+        self.reset_snake()
+        self.extra_speed = 0
+        self.head = self.segments[0]
 
     def move(self):
         # Animate Snake
@@ -48,7 +59,7 @@ class Snake:
             new_y = self.segments[seg_num - 1].ycor()
             self.segments[seg_num].goto(new_x, new_y)
 
-        self.segments[0].forward(MOVE_DISTANCE)
+        self.segments[0].forward(MOVE_DISTANCE + self.extra_speed)
 
     def upward(self):
         if self.segments[0].heading() != 270:

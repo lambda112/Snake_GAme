@@ -9,13 +9,28 @@ class Score(Turtle):
         self.hideturtle()
         self.color("white")
         self.goto(POSITION)
+        self.penup()
+        self.score = 0
 
-    def write_score(self,score):
-        self.clear()
-        self.write(arg = f"Score: {score}", align= ALLIGN, font= FONT)
+        with open("high_score.txt", "r") as file:
+            self.highscore = file.read()
 
-    def write_game_over(self, score):
+        self.highscore = int(self.highscore)
+        self.update_score()
+
+    def update_score(self):
         self.clear()
-        self.goto(0,0)
-        self.write(arg = f"Game Over. You Got {score} Apples.", align= ALLIGN, font= FONT)
+        self.write(arg = f"Score: {self.score} High Score: {self.highscore}", align= ALLIGN, font= FONT)
+
+    def reset(self):
+        if self.score > self.highscore:
+            self.highscore = self.score
+            with open("high_score.txt", "w") as file:
+                file.write(str(self.highscore))
+
+        self.score = 0
+        self.update_score()
+
+    def increase_score(self):
+        self.score += 1
         
